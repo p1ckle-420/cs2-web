@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Counter-Strike 2 – průvodce</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eceae4;--surf:#fff;--ink:#1d2430;--mute:#5d6675;--line:#d3d0c6;--ct:#3f5f96;--t:#b97410;--on:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161b24;--surf:#1f2632;--ink:#e8e6df;--mute:#9aa3b2;--line:#323b4b;--ct:#7f9fd6;--t:#e4a43c;--on:#10141b}}
+:root[data-theme="dark"]{--bg:#161b24;--surf:#1f2632;--ink:#e8e6df;--mute:#9aa3b2;--line:#323b4b;--ct:#7f9fd6;--t:#e4a43c;--on:#10141b}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2,h3{font-family:"Barlow Condensed","Arial Narrow",Impact,sans-serif;line-height:1;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--t);outline-offset:2px}
+.wrap{max-width:960px;margin:0 auto;padding:0 18px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:10px 18px;border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+nav a{white-space:nowrap;text-decoration:none;padding:7px 12px;border-radius:6px;color:var(--mute);font-weight:600}
+nav a:hover{color:var(--ink);background:var(--surf)}
+.hero{padding:56px 0 40px;display:grid;gap:28px;grid-template-columns:1.3fr 1fr;align-items:center}
+.hero h1{font-size:clamp(56px,13vw,120px);font-weight:800;letter-spacing:-.01em}
+.hero h1 span{display:block;color:var(--ct)}
+.hero h1 span+span{color:var(--t)}
+.hero p{color:var(--mute);max-width:46ch;margin:18px 0 0}
+.scope{background:var(--surf);border:1px solid var(--line);border-radius:12px;aspect-ratio:1;display:grid;place-items:center}
+section{padding:36px 0;border-top:1px solid var(--line)}
+section>.wrap>h2{font-size:42px;font-weight:800;margin-bottom:6px}
+.lead{color:var(--mute);margin:0 0 20px;max-width:60ch}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:8px}
+.facts div{background:var(--surf);border:1px solid var(--line);border-radius:8px;padding:14px}
+.facts b{display:block;font:800 22px "Barlow Condensed",Arial Narrow,sans-serif;margin-bottom:4px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+input,select,button{font:inherit;color:var(--ink);background:var(--surf);border:1px solid var(--line);border-radius:6px;padding:8px 10px}
+button{cursor:pointer;font-weight:600}
+button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;background:var(--surf);border:1px solid var(--line);min-width:520px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line)}
+th{cursor:pointer;color:var(--mute);font-weight:600;user-select:none}
+.tag{display:inline-block;padding:1px 8px;border-radius:4px;font-size:13px;font-weight:700;color:var(--on)}
+.tag.T{background:var(--t)}.tag.CT{background:var(--ct)}.tag.obě{background:var(--mute)}
+.maps{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.map{background:var(--surf);border:1px solid var(--line);border-radius:8px;padding:14px;text-align:left;display:block;width:100%}
+.map h3{font-size:26px}
+.map small{color:var(--mute);display:block;margin-top:4px;font-weight:400}
+.map[aria-expanded="true"]{border-color:var(--t)}
+.map .more{display:none;margin-top:10px;font-weight:400;font-size:15px}
+.map[aria-expanded="true"] .more{display:block}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.panel{background:var(--surf);border:1px solid var(--line);border-radius:10px;padding:18px}
+label{display:grid;gap:4px;margin-bottom:12px;font-weight:600}
+label span{display:flex;justify-content:space-between;color:var(--mute);font-weight:400}
+input[type=range]{padding:0;width:100%;accent-color:var(--t)}
+input[type=color]{padding:2px;height:38px;width:100%}
+.preview{background:#7a8a6a;border-radius:10px;aspect-ratio:16/10;display:grid;place-items:center;margin-bottom:12px}
+.cmd{width:100%;min-height:150px;font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;resize:vertical}
+.big{font:800 54px "Barlow Condensed",Arial Narrow,sans-serif;color:var(--t)}
+.ok li{margin:3px 0}
+footer{padding:28px 0;color:var(--mute);border-top:1px solid var(--line);font-size:14px}
+@media (max-width:700px){.hero,.two{grid-template-columns:1fr}.hero{padding-top:32px}.scope{max-width:280px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<nav aria-label="Sekce">
+<a href="#zbrane">Zbraně</a><a href="#mapy">Mapy</a><a href="#ekonomika">Ekonomika</a><a href="#mireni">Zaměřovač</a><a href="#zaklady">Základy</a>
+</nav>
+
+<header class="wrap hero">
+<div>
+<h1>Counter-<span>Strike</span><span>2</span></h1>
+<p>Týmová střílečka od Valve, kde na sebe v kolech narazí teroristé a counter-teroristé. Tady najdeš ceny zbraní, mapy, kalkulačku ekonomiky a generátor zaměřovače.</p>
+</div>
+<div class="scope" aria-hidden="true">
+<svg viewBox="0 0 200 200" width="80%" fill="none" stroke="currentColor" stroke-width="3" style="color:var(--ink)">
+<circle cx="100" cy="100" r="78"/><circle cx="100" cy="100" r="3" fill="currentColor"/>
+<path d="M100 10v52M100 138v52M10 100h52M138 100h52" stroke="var(--t)" stroke-width="5"/>
+<path d="M100 40v14M100 146v14M40 100h14M146 100h14" stroke="var(--ct)" stroke-width="4"/>
+</svg>
+</div>
+</header>
+
+<section id="zaklady"><div class="wrap">
+<h2>Základy hry</h2>
+<p class="lead">Zápas se hraje na kola. Kdo první vyhraje dost kol, bere zápas.</p>
+<div class="facts">
+<div><b>5 na 5</b>Dva týmy. T mají za cíl podložit bombu, CT tomu zabránit.</div>
+<div><b>Kolo 1:55</b>Po podložení bomby běží 40 sekund do výbuchu.</div>
+<div><b>Premier</b>Soutěžní režim s hodnocením CS Rating a vlastním mapovým výběrem.</div>
+<div><b>Sub-tick</b>Server v CS2 zpracovává akce přesněji než v ticích, takže střelba a pohyb jsou spolehlivější.</div>
+</div>
+</div></section>
+
+<section id="zbrane"><div class="wrap">
+<h2>Zbraně</h2>
+<p class="lead">Ceny a odměny za zabití. Klikni na hlavičku sloupce a seřadíš tabulku.</p>
+<div class="tools" role="group" aria-label="Filtry">
+<input id="q" type="search" placeholder="Hledat zbraň" aria-label="Hledat zbraň">
+<button data-cat="vše" aria-pressed="true">Vše</button>
+<button data-cat="Pistole" aria-pressed="false">Pistole</button>
+<button data-cat="SMG" aria-pressed="false">SMG</button>
+<button data-cat="Puška" aria-pressed="false">Pušky</button>
+<button data-cat="Těžká" aria-pressed="false">Těžké</button>
+</div>
+<div class="scroll"><table>
+<thead><tr><th data-k="n">Zbraň</th><th data-k="c">Typ</th><th data-k="s">Strana</th><th data-k="p">Cena</th><th data-k="k">Za zabití</th></tr></thead>
+<tbody id="wb"></tbody></table></div>
+<p id="wc" class="lead" style="margin-top:10px"></p>
+</div></section>
+
+<section id="mapy"><div class="wrap">
+<h2>Mapy</h2>
+<p class="lead">Klikni na mapu pro tip. Aktuální soutěžní výběr se mezi sezónami mění, ověř ho přímo ve hře.</p>
+<div class="maps" id="mp"></div>
+</div></section>
+
+<section id="ekonomika"><div class="wrap">
+<h2>Ekonomika</h2>
+<p class="lead">Rozhodnutí, co koupit, často rozhodne o kole. Spočítej bonus za prohraná kola a zjisti, co si můžeš dovolit.</p>
+<div class="two">
+<div class="panel">
+<label><span>Prohraná kola v řadě <b id="lsv">1</b></span><input id="ls" type="range" min="0" max="4" value="1"></label>
+<div>Bonus za příští kolo</div><div class="big" id="lb">$1900</div>
+<p class="lead" style="margin:4px 0 0">Bonus roste o $500 za každou prohru, nejvýš na $3400. Výhra kola dává $3250.</p>
+</div>
+<div class="panel">
+<label>Tvoje peníze<input id="mn" type="number" min="0" max="16000" step="50" value="3000"></label>
+<label style="grid-template-columns:auto 1fr;align-items:center"><input id="ar" type="checkbox" style="width:auto"> Kevlar a helma (−$1000)</label>
+<div>Můžeš si koupit:</div>
+<ul class="ok" id="af"></ul>
+</div>
+</div>
+</div></section>
+
+<section id="mireni"><div class="wrap">
+<h2>Generátor zaměřovače</h2>
+<p class="lead">Nastav vzhled a zkopíruj příkazy do herní konzole.</p>
+<div class="two">
+<div>
+<div class="preview"><svg id="xh" width="200" height="200" viewBox="-50 -50 100 100"></svg></div>
+<textarea id="cmd" class="cmd" readonly aria-label="Příkazy pro konzoli"></textarea>
+<div class="tools" style="margin-top:8px"><button id="cp">Zkopírovat příkazy</button><span id="cps" role="status" class="lead" style="margin:8px 0 0"></span></div>
+</div>
+<div class="panel">
+<label><span>Délka čar <b id="v1"></b></span><input id="size" type="range" min="0" max="10" step="0.5" value="3"></label>
+<label><span>Tloušťka <b id="v2"></b></span><input id="thick" type="range" min="0" max="3" step="0.5" value="1"></label>
+<label><span>Mezera <b id="v3"></b></span><input id="gap" type="range" min="-5" max="5" step="0.5" value="-1"></label>
+<label>Barva<input id="col" type="color" value="#2ee6a6"></label>
+<label style="grid-template-columns:auto 1fr;align-items:center"><input id="dot" type="checkbox" style="width:auto"> Středová tečka</label>
+<label style="grid-template-columns:auto 1fr;align-items:center"><input id="out" type="checkbox" checked style="width:auto"> Černý okraj</label>
+</div>
+</div>
+</div></section>
+
+<footer><div class="wrap">Neoficiální fanouškovská stránka. Counter-Strike 2 je značka společnosti Valve. Ceny a mapy ověř ve hře, protože se po aktualizacích mění.</div></footer>
+
+<script>
+const W=[["Glock-18","Pistole","T",200,300],["USP-S","Pistole","CT",200,300],["P2000","Pistole","CT",200,300],["P250","Pistole","obě",300,300],["Dual Berettas","Pistole","obě",300,300],["Five-SeveN","Pistole","CT",500,300],["Tec-9","Pistole","T",500,300],["CZ75-Auto","Pistole","obě",500,100],["R8 Revolver","Pistole","obě",600,300],["Desert Eagle","Pistole","obě",700,300],
+["MAC-10","SMG","T",1050,600],["UMP-45","SMG","obě",1200,600],["MP9","SMG","CT",1250,600],["PP-Bizon","SMG","obě",1400,600],["MP7","SMG","obě",1500,600],["MP5-SD","SMG","obě",1500,600],["P90","SMG","obě",2350,300],
+["SSG 08","Puška","obě",1700,300],["Galil AR","Puška","T",1800,300],["FAMAS","Puška","CT",1950,300],["AK-47","Puška","T",2700,300],["M4A4","Puška","CT",2900,300],["M4A1-S","Puška","CT",2900,300],["SG 553","Puška","T",3000,300],["AUG","Puška","CT",3300,300],["AWP","Puška","obě",4750,100],["G3SG1","Puška","T",5000,300],["SCAR-20","Puška","CT",5000,300],
+["Nova","Těžká","obě",1050,900],["Sawed-Off","Těžká","T",1100,900],["MAG-7","Těžká","CT",1300,900],["Negev","Těžká","obě",1700,300],["XM1014","Těžká","obě",2000,900],["M249","Těžká","obě",5200,300]]
+.map(([n,c,s,p,k])=>({n,c,s,p,k}));
+const $=id=>document.getElementById(id);
+let cat="vše",sk="p",dir=1;
+function drawW(){
+  const q=$("q").value.trim().toLowerCase();
+  const rows=W.filter(w=>(cat==="vše"||w.c===cat)&&w.n.toLowerCase().includes(q))
+    .sort((a,b)=>(a[sk]>b[sk]?1:a[sk]<b[sk]?-1:0)*dir);
+  $("wb").innerHTML=rows.map(w=>`<tr><td><b>${w.n}</b></td><td>${w.c}</td><td><span class="tag ${w.s}">${w.s}</span></td><td>$${w.p}</td><td>$${w.k}</td></tr>`).join("")||`<tr><td colspan="5">Nic nenalezeno. Zkus jiný název.</td></tr>`;
+  $("wc").textContent=rows.length+" zbraní";
+}
+$("q").oninput=drawW;
+document.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{cat=b.dataset.cat;document.querySelectorAll("[data-cat]").forEach(x=>x.setAttribute("aria-pressed",x===b));drawW()});
+document.querySelectorAll("th").forEach(h=>h.onclick=()=>{const k=h.dataset.k;dir=sk===k?-dir:1;sk=k;drawW()});
+drawW();
+
+const M=[["Mirage","Střední Východ","Kontrola středu a okna je klíčová. Naučte se kouřové clony na A rampu a konektor."],["Inferno","Italské městečko","Úzké uličky, takže granáty rozhodují. Banány drží CT při dobrém využití molotovů."],["Dust II","Poušť","Klasika. Dlouhý koridor a AWP souboje, kdo ovládne Long, ovládne tempo."],["Nuke","Jaderná elektrárna","Dvě patra a rampa mezi nimi. Komunikace o výšce je důležitější než míření."],["Ancient","Mayský chrám","Lehce hratelný střed, ale pomalejší hra kolem vodního kanálu a vchodu na B."],["Anubis","Egypt","Vodní kanály a široké prostory. Hodně dostřelů z dálky."],["Overpass","Německo, park","Vertikální mapa se spoustou úhlů. Ovládnutí vody (Monster) dává výhodu CT."],["Vertigo","Rozestavěný mrakodrap","Úzké lávky nahoře a rychlé rotace. Pozor na pád z výšky."]];
+$("mp").innerHTML=M.map(([n,s,t])=>`<button class="map" aria-expanded="false"><h3>${n}</h3><small>${s}</small><span class="more">${t}</span></button>`).join("");
+document.querySelectorAll(".map").forEach(b=>b.onclick=()=>b.setAttribute("aria-expanded",b.getAttribute("aria-expanded")!=="true"));
+
+const bon=[1400,1900,2400,2900,3400];
+function eco(){
+  const l=+$("ls").value;$("lsv").textContent=l;$("lb").textContent="$"+bon[l];
+  const m=+$("mn").value||0-(0)-0, left=m-($("ar").checked?1000:0);
+  const ok=W.filter(w=>w.p<=left).sort((a,b)=>b.p-a.p).slice(0,6);
+  $("af").innerHTML=left<0?"<li>Na brnění nemáš dost. Zrušte volbu nebo vyčkej.</li>":ok.length?ok.map(w=>`<li>${w.n} <small>($${w.p}, zbude $${left-w.p})</small></li>`).join(""):"<li>Zatím nic. Ušetři na příští kolo.</li>";
+}
+["ls","mn","ar"].forEach(i=>$(i).oninput=eco);eco();
+
+function xh(){
+  const s=+$("size").value,t=+$("thick").value,g=+$("gap").value,c=$("col").value;
+  $("v1").textContent=s;$("v2").textContent=t;$("v3").textContent=g;
+  const L=s*4,T=Math.max(t*2,.5),G=g*2+4,o=$("out").checked?1:0;
+  const bars=[[-G-L,-T/2,L,T],[G,-T/2,L,T],[-T/2,-G-L,T,L],[-T/2,G,T,L]];
+  let h="";
+  bars.forEach(b=>{h+=`<rect x="${b[0]}" y="${b[1]}" width="${b[2]}" height="${b[3]}" fill="${c}" stroke="${o?"#000":"none"}" stroke-width="${o}"/>`});
+  if($("dot").checked)h+=`<rect x="-1.5" y="-1.5" width="3" height="3" fill="${c}" stroke="${o?"#000":"none"}"/>`;
+  $("xh").innerHTML=h;
+  const r=parseInt(c.slice(1,3),16),gr=parseInt(c.slice(3,5),16),b=parseInt(c.slice(5,7),16);
+  $("cmd").value=["cl_crosshairstyle 4","cl_crosshairsize "+s,"cl_crosshairthickness "+t,"cl_crosshairgap "+g,"cl_crosshaircolor 5","cl_crosshaircolor_r "+r,"cl_crosshaircolor_g "+gr,"cl_crosshaircolor_b "+b,"cl_crosshairdot "+($("dot").checked?1:0),"cl_crosshair_drawoutline "+o,"cl_crosshairalpha 255"].join("\n");
+}
+["size","thick","gap","col","dot","out"].forEach(i=>$(i).oninput=xh);xh();
+$("cp").onclick=async()=>{
+  try{await navigator.clipboard.writeText($("cmd").value);$("cps").textContent="Zkopírováno."}
+  catch(e){$("cmd").select();$("cps").textContent="Text je označený, zkopíruj ho ručně."}
+};
+</script>
+</body>
+</html>
